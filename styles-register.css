@@ -1,7 +1,7 @@
-/* General */
+/* styles-register.css */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
     margin: 0;
     padding: 0;
     display: flex;
@@ -14,19 +14,18 @@ body {
     width: 100%;
     max-width: 400px;
     padding: 20px;
-    background-color: #fff;
+    background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
 }
 
-/* Formulario */
 .form-container {
     width: 100%;
 }
 
 h2 {
     text-align: center;
-    color: #333;
+    color: #2a5298;
 }
 
 label {
@@ -36,21 +35,20 @@ label {
     color: #333;
 }
 
-input[type="text"],
-input[type="password"] {
+input {
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 14px;
-    box-sizing: border-box;  /* Asegura que el padding no afecte el ancho total */
+    box-sizing: border-box;
 }
 
 button {
     width: 100%;
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #2a5298;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -59,17 +57,11 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
-}
-
-/* Enlaces */
-p {
-    text-align: center;
-    font-size: 14px;
+    background-color: #1e3c72;
 }
 
 a {
-    color: #007BFF;
+    color: #1e3c72;
     text-decoration: none;
 }
 

@@ -1,143 +1,68 @@
-/* General */
+/* styles.css */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f7f7f7;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #c3e0e5, #a1c4fd);
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100vh;
-    padding-top: 40px;
-}
-
-.container {
-    width: 100%;
-    max-width: 900px;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-/* Dashboard */
-.dashboard {
-    width: 100%;
-}
-
-.header {
     text-align: center;
-    margin-bottom: 20px;
 }
 
-h2 {
-    font-size: 24px;
-    color: #333;
-}
-
-p {
-    font-size: 16px;
-    color: #666;
-}
-
-.password-list {
-    margin-top: 30px;
-}
-
-.password-list table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-.password-list th, .password-list td {
-    padding: 15px;
-    text-align: left;
-    font-size: 16px;
-    color: #333;
-}
-
-.password-list th {
-    background-color: #4CAF50;
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #003366;
     color: white;
 }
 
-.password-list tr:nth-child(odd) {
-    background-color: #f9f9f9;
-}
-
-.password-list tr:nth-child(even) {
-    background-color: #f1f1f1;
-}
-
-.password-list a {
-    color: #007BFF;
-    text-decoration: none;
-}
-
-.password-list a:hover {
-    text-decoration: underline;
-}
-
-/* Formulario */
-form {
-    margin-top: 20px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-label {
-    font-size: 16px;
-    color: #333;
-}
-
-input[type="text"],
-input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-top: 8px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #4CAF50;
+button.logout {
+    background-color: #ff4d4d;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    padding: 10px 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-.actions {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.back-btn, .logout-btn {
-    display: inline-block;
-    width: 200px;
-    padding: 12px;
-    background-color: #f44336;
-    color: white;
-    text-align: center;
-    font-size: 16px;
     border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
 }
 
-.back-btn:hover, .logout-btn:hover {
-    background-color: #e53935;
+main {
+    margin: 20px;
+}
+
+table {
+    width: 80%;
+    margin: auto;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #004488;
+    color: white;
+}
+
+button.delete {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button.add-password {
+    margin-top: 20px;
+    background-color: #008080;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
 }
