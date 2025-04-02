@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="dashboard">
+            <div class="header">
+                <h2>Bienvenido al Dashboard</h2>
+                <p>Gestiona tus contraseñas de manera segura</p>
+            </div>
+            
+            <div class="password-list">
+                <h3>Listado de Contraseñas</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre de la Página</th>
+                            <th>Contraseña</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="editar_contraseña.html?site=facebook">Facebook</a></td>
+                            <td>**********</td>
+                            <td><button class="btn view-btn">Ver</button></td>
+                        </tr>
+                        <tr>
+                            <td><a href="editar_contraseña.html?site=gmail">Gmail</a></td>
+                            <td>**********</td>
+                            <td><button class="btn view-btn">Ver</button></td>
+                        </tr>
+                        <tr>
+                            <td><a href="editar_contraseña.html?site=twitter">Twitter</a></td>
+                            <td>**********</td>
+                            <td><button class="btn view-btn">Ver</button></td>
+                        </tr>
+                        <tr>
+                            <td><a href="editar_contraseña.html?site=amazon">Amazon</a></td>
+                            <td>**********</td>
+                            <td><button class="btn view-btn">Ver</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="actions">
+                <a href="index.html" class="btn logout-btn">Cerrar sesión</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
