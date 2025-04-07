@@ -15,61 +15,24 @@ DROP DATABASE IF EXISTS keysafe;
 CREATE DATABASE keysafe;
 USE keysafe;
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `keysafe`
---
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `contraseñas`
---
-
 CREATE TABLE `contraseñas` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `pagina` varchar(200) NOT NULL,
   `usuario` varchar(50) NOT NULL,
-  `contraseña` int(50) NOT NULL
+  `contraseña` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `usuarios`
---
-
 CREATE TABLE `usuarios` (
-  `id` int(40) NOT NULL,
+  `id` int(40) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(70) NOT NULL,
   `apellidos` varchar(70) NOT NULL,
   `username` varchar(50) NOT NULL,
   `contraseña` varchar(50) NOT NULL,
-  `correo` varchar(100) NOT NULL
+  `correo` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `contraseñas`
---
-ALTER TABLE `contraseñas`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`);
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

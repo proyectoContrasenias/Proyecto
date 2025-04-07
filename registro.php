@@ -5,12 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
     <link rel="stylesheet" href="styles-register.css">
+    <script>
+        function validarFormulario(event) {
+            const contrasena = document.getElementById('contrasena').value;
+            const repiteContrasena = document.getElementById('repite-contrasena').value;
+
+            // Compara las contraseñas
+            if (contrasena !== repiteContrasena) {
+                // Evita el envío del formulario
+                event.preventDefault();
+                alert("Las contraseñas no coinciden. Por favor, intenta de nuevo.");
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="container">
         <div class="form-container">
             <h2>Crear cuenta</h2>
-            <form action="index.php" method="POST">
+            <form action="index.php" method="POST" onsubmit="validarFormulario(event)">
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
 
@@ -37,3 +50,4 @@
     </div>
 </body>
 </html>
+
