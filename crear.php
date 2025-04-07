@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Nueva Contraseña - KeySafe</title>
     <link rel="stylesheet" href="estilocrear.css">
 </head>
+
 <body>
     <header>
         <h1>KeySafe - Crear Contraseña</h1>
@@ -14,10 +16,25 @@
             <button class="back-button" onclick="location.href='dashboard.php'">Volver al Menú</button>
         </div>
     </header>
-    
+
+    <?php
+    $conn = new mysqli("127.0.0.1", "proyecto", "proyecto", "keysafe");
+    if ($conn->connect_error) {
+        die("Error de conexión: " . $conn->connect_error);
+    }
+
+    // Comprobar si se ha enviado el formulario
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nombre'], $_POST['usuario'], $_POST['contrasena'])) {
+        $stmt = $conn->prepare("INSERT INTO contraseñas(pagina, usuario, contraseña) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $_POST['nombre'], $_POST['usuario'], $_POST['contrasena']);
+        $stmt->execute();
+        $stmt->close();
+        echo "<p>Contraseña guardada exitosamente.</p>";
+    }
+    ?>
 
     <main>
-        <form class="form-container">
+        <form class="form-container" method="post">
             <label for="nombre">Nombre de la Página:</label>
             <input type="text" id="nombre" name="nombre" required>
 
@@ -48,5 +65,10 @@
             }
         }
     </script>
+
+    <?php
+    $conn->close();
+    ?>
 </body>
+
 </html>

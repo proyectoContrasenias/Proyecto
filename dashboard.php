@@ -14,7 +14,6 @@
     if ($conn->connect_error) {
         die("Error de conexión" . $conn->connect_error);
     }
-    $conn->close();
     ?>
     <header>
         <h1>KeySafe - Gestor de Contraseñas</h1>
@@ -30,25 +29,27 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><a href="editar.php">Facebook</a></td>
+                <?php
+                $resultado = $conn->query("SELECT pagina, usuario, contraseña FROM contraseñas");
+                if ($resultado->num_rows > 0) {
+                    while ($row = $resultado->fetch_assoc()) {
+                        echo "<tr><td><a href='editar.php'>".$row['pagina'] . "</a></td>
                     <td>********</td>
-                    <td><button class="delete">Borrar</button></td>
-                </tr>
-                <tr>
-                    <td><a href="editar.php">Twitter</a></td>
-                    <td>********</td>
-                    <td><button class="delete">Borrar</button></td>
-                </tr>
-                <tr>
-                    <td><a href="editar.php">Instagram</a></td>
-                    <td>********</td>
-                    <td><button class="delete">Borrar</button></td>
-                </tr>
+                    <td><button class='delete'>Borrar</button></td>";
+                    }
+                } else {
+                    echo 'Sin resultados';
+                }
+                $resultado->close(); 
+                ?>
             </tbody>
         </table>
         <button class="add-password" onclick="location.href='crear.php'">Crear Nueva Contraseña</button>
     </main>
+
+    <?php
+    $conn->close();
+    ?>
 </body>
 
 </html>
