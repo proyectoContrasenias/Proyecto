@@ -10,7 +10,7 @@
     <div class="container">
         <div class="form-container">
             <h2>Iniciar sesión</h2>
-            <form action="dashboard.html" method="POST">
+            <form action="dashboard.php" method="POST">
                 <label for="usuario">Usuario:</label>
                 <input type="text" id="usuario" name="usuario" placeholder="Ingresa tu usuario" required>
 
@@ -20,7 +20,7 @@
                 <button type="submit">Iniciar sesión</button>
             </form>
 
-            <p>¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a></p>
+            <p>¿No tienes cuenta? <a href="registro.php">Regístrate aquí</a></p>
         </div>
     </div>
 </body>

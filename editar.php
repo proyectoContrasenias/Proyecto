@@ -10,14 +10,14 @@
     <header>
         <h1>KeySafe - Editar Contraseña</h1>
         <div>
-            <button class="logout" onclick="location.href='index.html'">Cerrar Sesión</button>
-            <button class="back-button" onclick="location.href='dashboard.html'">Volver al Menú</button>
+            <button class="logout" onclick="location.href='index.php'">Cerrar Sesión</button>
+            <button class="back-button" onclick="location.href='dashboard.php'">Volver al Menú</button>
         </div>
     </header>
     
 
     <main>
-        <form class="form-container" onsubmit="event.preventDefault(); location.href='dashboard.html';">
+        <form class="form-container" onsubmit="event.preventDefault(); location.href='dashboard.php';">
             <label for="nombre">Nombre de la Página:</label>
             <input type="text" id="nombre" name="nombre" value="Facebook" required>
 

@@ -10,7 +10,7 @@
     <div class="container">
         <div class="form-container">
             <h2>Crear cuenta</h2>
-            <form action="login.html" method="POST">
+            <form action="index.php" method="POST">
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
 
@@ -32,7 +32,7 @@
                 <button type="submit">Registrar</button>
             </form>
 
-            <p>¿Ya tienes cuenta? <a href="index.html">Inicia sesión aquí</a></p>
+            <p>¿Ya tienes cuenta? <a href="index.php">Inicia sesión aquí</a></p>
         </div>
     </div>
 </body>
