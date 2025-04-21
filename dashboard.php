@@ -13,6 +13,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     header("Location: index.php?error=Has cerrado sesión correctamente");
     exit();
 }
+// Se conecta a la base de datos y si no muestra el error
+$con = new mysqli("localhost", "proyecto", "proyecto", "keysafe");
+if ($con->connect_error) {
+    die("Error de conexión: " . $con->connect_error);
+}
+// Hace la consulta y recorre la base de datos
+$sql = "SELECT * FROM contraseñas;";
+$resultado = $con->query($sql);
+$row = $resultado->fetch_assoc();
+// Si se pulsa el botón borrar elimina el juego de la base de datos 
+if (isset($_POST['delete_id'])) {
+    $delete_id = $_POST['delete_id'];
+    $stmt = $con->prepare("DELETE FROM contraseñas WHERE id = ?");
+    $stmt->bind_param("i", $delete_id);
+    $stmt->execute();
+    $stmt->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -26,12 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 </head>
 
 <body>
-    <?php
-    $conn = new mysqli("127.0.0.1", "proyecto", "proyecto", "keysafe");
-    if ($conn->connect_error) {
-        die("Error de conexión" . $conn->connect_error);
-    }
-    ?>
     <header>
         <h1>KeySafe - Gestor de Contraseñas</h1>
         <form method="POST" style="display:inline;">
@@ -49,12 +60,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
             </thead>
             <tbody>
                 <?php
-                $resultado = $conn->query("SELECT pagina, usuario, contraseña FROM contraseñas");
                 if ($resultado->num_rows > 0) {
                     while ($row = $resultado->fetch_assoc()) {
-                        echo "<tr><td><a href='editar.php'>".$row['pagina'] . "</a></td>
-                    <td>********</td>
-                    <td><button class='delete'>Borrar</button></td>";
+                        $id_pagina = $row['id'];
+                        echo "<tr>
+                            <td><a href='editar.php?id=$id_pagina'>".$row['pagina']."</a></td>
+                            <td>********</td>
+                            <td>
+                                <form method='POST' style='display:inline;'>
+                                    <input type='hidden' name='delete_id' value='".$row['id']."'>
+                                    <button type='submit' class='delete'>Borrar</button>
+                                </form>
+                            </td>
+                        </tr>";
                     }
                 } else {
                     echo 'Sin resultados';
@@ -67,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     </main>
 
     <?php
-    $conn->close();
+    $con->close();
     ?>
 </body>
 
