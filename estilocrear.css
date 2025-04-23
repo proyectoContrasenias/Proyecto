@@ -67,21 +67,24 @@ main {
     gap: 10px;
 }
 
-.toggle-password {
+.toggle-password,
+.generate-password {
     background-color: #004488;
     color: white;
     border: none;
-    padding: 8px 15px;
+    padding: 10px 20px; /* Aumentamos el padding */
     border-radius: 5px;
     cursor: pointer;
+    white-space: nowrap; /* Evita que el texto se divida en dos líneas */
+    font-size: 14px; /* Opcional: ajustar el tamaño si lo necesitas */
 }
 
 button.back-button {
-    background-color: #4CAF50;  /* Color verde para diferenciar */
+    background-color: #4CAF50;
     color: white;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
-    margin-left: 10px;  /* Espacio entre los botones */
+    margin-left: 10px;
 }

@@ -63,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
             <div class="password-container">
                 <input type="password" id="contrasena" name="contrasena" required>
                 <button type="button" class="toggle-password" onclick="togglePassword()">Mostrar</button>
+                <button type="button" class="generate-password" onclick="generatePassword()">Generar contraseña</button>
             </div>
 
             <button type="submit" class="save-button">Guardar Contraseña</button>
@@ -81,6 +82,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
                 passwordInput.type = 'password';
                 toggleButton.textContent = 'Mostrar';
             }
+        }
+
+        function generatePassword() {
+            const length = 12;
+            const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
+            let password = "";
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * charset.length);
+                password += charset[randomIndex];
+            }
+            document.getElementById('contrasena').value = password;
         }
     </script>
 
