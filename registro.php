@@ -5,6 +5,7 @@ if ($conex->connect_error) {
 }
 
 $mensaje = "";
+$mensajeError = "";
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $nombrenuevo = $_POST['nombre'];
@@ -12,21 +13,27 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $usunuevo = $_POST['usuario'];
     $emailnuevo = $_POST['email'];
     $connueva = $_POST['contrasena'];
+    $connueva2 = $_POST['repite-contrasena'];
 
-
-
-    $stmt = $conex->prepare('INSERT INTO usuarios (nombre, apellidos, username, contraseña, correo) VALUES(?, ?, ?, ?, ?)');
-    $stmt->bind_param('sssss', $nombrenuevo, $apellido, $usunuevo, $connueva, $emailnuevo);
-
-    if ($stmt->execute()) {
-        $mensaje = "Registro completado correctamente";
+    if ($connueva !== $connueva2) {
+        $mensajeError = "Las contraseñas no coinciden.";
     } else {
-        $mensaje = "Error al crear el usuario: " . $stmt->error;
-    }
+        $passwordHash = password_hash($connueva, PASSWORD_DEFAULT);
 
-    $stmt->close();
+        $stmt = $conex->prepare('INSERT INTO usuarios (nombre, apellidos, username, contraseña, correo) VALUES(?, ?, ?, ?, ?)');
+        $stmt->bind_param('sssss', $nombrenuevo, $apellido, $usunuevo, $passwordHash, $emailnuevo);
+
+        if ($stmt->execute()) {
+            $mensaje = "Registro completado correctamente";
+        } else {
+            $mensajeError = "Error al crear el usuario: " . $stmt->error;
+        }
+
+        $stmt->close();
+    }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -77,6 +84,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 <?php if ($mensaje): ?>
                     <p class="success-message"><?php echo $mensaje; ?></p>
                 <?php endif; ?>
+
+                <?php if ($mensajeError): ?>
+                    <p class="error-message"><?php echo $mensajeError; ?></p>
+                <?php endif; ?>
+
             </form>
 
             <p>¿Ya tienes cuenta? <a href="index.php">Inicia sesión aquí</a></p>
