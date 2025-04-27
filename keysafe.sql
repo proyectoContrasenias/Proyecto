@@ -15,16 +15,6 @@ DROP DATABASE IF EXISTS keysafe;
 CREATE DATABASE keysafe;
 USE keysafe;
 
-
-CREATE TABLE `contraseñas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `pagina` varchar(200) NOT NULL,
-  `usuario` varchar(50) NOT NULL,
-  `contraseña` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-
 CREATE TABLE `usuarios` (
   `id` int(40) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(70) NOT NULL,
@@ -33,6 +23,16 @@ CREATE TABLE `usuarios` (
   `contraseña` varchar(50) NOT NULL,
   `correo` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `contraseñas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pagina` varchar(200) NOT NULL,
+  `usuario` varchar(50) NOT NULL,
+  `contraseña` varchar(50) NOT NULL,
+  `usuario_id` int(40) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`usuario_id`) REFERENCES `usuarios`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 COMMIT;

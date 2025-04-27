@@ -5,6 +5,11 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: index.php?error=Debes iniciar sesión para acceder");
     exit();
 }
+if (!isset($_GET['id_usuario']) || !is_numeric($_GET['id_usuario'])) {
+    header("Location: index.php?error=ID de usuario no válido");
+    exit();
+}
+$id_usuario = (int) $_GET['id_usuario'];
 /* Si el formulario fue enviado con POST y se ha pulsado el botón de cerrar sesión elimina las variables de la sesión,
 destruye la sesión y redirige a index.php con un mensaje de error */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
@@ -19,7 +24,7 @@ if ($con->connect_error) {
     die("Error de conexión: " . $con->connect_error);
 }
 
-// 🧼 Primero procesamos eliminación si se ha pulsado el botón borrar
+// Primero procesamos eliminación si se ha pulsado el botón borrar
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     $delete_id = $_POST['delete_id'];
     $stmt = $con->prepare("DELETE FROM contraseñas WHERE id = ?");
@@ -27,13 +32,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     $stmt->execute();
     $stmt->close();
     // Redirigimos para evitar reenvío del formulario y ver los datos actualizados
-    header("Location: ".$_SERVER['PHP_SELF']);
+    header("Location: ".$_SERVER['PHP_SELF']."?id_usuario=".$id_usuario);
     exit();
 }
 
 // Luego hacemos la consulta y obtenemos los resultados actualizados
-$sql = "SELECT * FROM contraseñas;";
-$resultado = $con->query($sql);
+$stmt2 = $con->prepare("SELECT * FROM contraseñas WHERE usuario_id = ?");
+$stmt2->bind_param("i", $id_usuario);
+$stmt2->execute();
+$resultado = $stmt2->get_result();
 ?>
 
 <!DOCTYPE html>

@@ -32,7 +32,8 @@ if (isset($_POST['update_id'])) {
     $stmtt->bind_param("sssi", $_POST['nombre'], $_POST['usuario'], $_POST['contrasena'], $update_id);
     if ($stmtt->execute()) {
         $stmtt->close();
-        header("Location: dashboard.php");
+        $id_usuario = $_SESSION['user_id'];
+        header("Location: dashboard.php?id_usuario=$id_usuario");
         exit();
     } else {
         echo "<p>Error al actualizar: " . $stmtt->error . "</p>";
@@ -54,7 +55,10 @@ if (isset($_POST['update_id'])) {
             <form method="POST" style="display:inline;">
                 <button type="submit" name="logout" class="logout">Cerrar sesión</button>
             </form>
-            <button class="back-button" onclick="location.href='dashboard.php'">Volver al Menú</button>
+            <?php
+            $id_usuario = $_SESSION['user_id'];
+            echo "<button class='back-button' onclick=\"location.href='dashboard.php?id_usuario=$id_usuario'\">Volver al Menú</button>";
+            ?>
         </div>
     </header>
     

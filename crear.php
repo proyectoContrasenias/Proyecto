@@ -31,7 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
             <form method="POST" style="display:inline;">
                 <button type="submit" name="logout" class="logout">Cerrar sesión</button>
             </form>
-            <button class="back-button" onclick="location.href='dashboard.php'">Volver al Menú</button>
+            <?php
+            $id_usuario = $_SESSION['user_id'];
+            echo "<button class='back-button' onclick=\"location.href='dashboard.php?id_usuario=$id_usuario'\">Volver al Menú</button>";
+            ?>
         </div>
     </header>
 
@@ -43,12 +46,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 
     // Comprobar si se ha enviado el formulario
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nombre'], $_POST['usuario'], $_POST['contrasena'])) {
-        $stmt = $conn->prepare("INSERT INTO contraseñas(pagina, usuario, contraseña) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $_POST['nombre'], $_POST['usuario'], $_POST['contrasena']);
+        $usuario_id = $_SESSION['user_id'];
+        $stmt = $conn->prepare("INSERT INTO contraseñas(pagina, usuario, contraseña, usuario_id) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("sssi", $_POST['nombre'], $_POST['usuario'], $_POST['contrasena'], $usuario_id);
         $stmt->execute();
         $stmt->close();
         echo "<p>Contraseña guardada exitosamente.</p>";
-    }
+    }    
     ?>
 
     <main>
