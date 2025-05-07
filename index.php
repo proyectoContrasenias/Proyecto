@@ -37,7 +37,7 @@ si es igual redirige a juegos.php, si no da un mensaje de error*/
         if ($result->num_rows>0) {
             $row = $result->fetch_assoc();
 
-            if ($password === $row['contraseña']) {
+            if (password_verify($password, $row['contraseña'])) {
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['user_name'] = $username;
                 $id_usuario = $row['id'];

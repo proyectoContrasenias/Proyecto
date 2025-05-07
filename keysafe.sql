@@ -20,7 +20,7 @@ CREATE TABLE `usuarios` (
   `nombre` varchar(70) NOT NULL,
   `apellidos` varchar(70) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `contraseña` varchar(50) NOT NULL,
+  `contraseña` varchar(255) NOT NULL,
   `correo` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

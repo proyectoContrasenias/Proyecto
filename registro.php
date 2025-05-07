@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $mensajeError = "Las contraseñas no coinciden.";
     } else {
         $passwordHash = password_hash($connueva, PASSWORD_DEFAULT);
-
+        echo "Hash generado: " . $passwordHash;
         $stmt = $conex->prepare('INSERT INTO usuarios (nombre, apellidos, username, contraseña, correo) VALUES(?, ?, ?, ?, ?)');
         $stmt->bind_param('sssss', $nombrenuevo, $apellido, $usunuevo, $passwordHash, $emailnuevo);
 
