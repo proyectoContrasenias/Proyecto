@@ -1,3 +1,62 @@
+<?php 
+session_start();
+require_once 'vendor/autoload.php';
+
+
+
+$mensaje_error = isset($_GET["error"]) ? $_GET["error"] : '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $auth_code = $_POST['auth_code'];
+
+    if (!empty($username) && !empty($password) && !empty($auth_code)) {
+        $con = new mysqli("localhost","proyecto","proyecto","keysafe");
+
+        if ($con->connect_error) {
+            die("Error de conexión: " . $con->connect_error);
+        }
+
+        // Obtiene la contraseña y el código secreto de Google Authenticator del usuario
+        $sql = "SELECT id, contraseña, google_auth_code FROM usuarios WHERE username = ?";
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows>0) {
+            $row = $result->fetch_assoc();
+
+            if (password_verify($password, $row['contraseña'])) {
+                // Verificación de Google Authenticator
+                $ga = new PHPGangsta_GoogleAuthenticator();
+                $secret = $row['google_auth_code'];
+                $validCode = $ga->verifyCode($secret, $auth_code, 2); // 2 = tolerancia en minutos
+
+                if ($validCode) {
+                    $_SESSION['user_id'] = $row['id'];
+                    $_SESSION['user_name'] = $username;
+                    header("Location: dashboard.php?id_usuario=" . $row['id']);
+                    exit();
+                } else {
+                    $mensaje_error = "Código de autenticación incorrecto.";
+                }
+            } else {
+                $mensaje_error = "Usuario o contraseña incorrectos.";
+            }
+        } else {
+            $mensaje_error = "Usuario o contraseña incorrectos.";
+        }
+
+        $stmt->close();
+        $con->close();
+    } else {
+        $mensaje_error = "Complete usuario, contraseña y código de autenticación.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,68 +66,23 @@
     <link rel="stylesheet" href="styles-login.css">
 </head>
 <body>
-<?php 
-session_start();
-// Revisa si hay un mensaje de error y si hay lo muestra abajo
-if (isset($_GET["error"])) {
-    $mensaje_error = $_GET["error"];
-} else {
-    $mensaje_error = '';
-}
-// Revisa si el formulario se envio con POST y asigna a las variables username y password el valor del formulario
-if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-// Si las variables username y password no están vacias se conecta a la base de datos
-    if (!empty($username) && !empty($password)) {
-        $con = new mysqli("localhost","proyecto","proyecto","keysafe");
-// Si no se conecta a la base de datos da un error
-        if ($con->connect_error) {
-            die("Error de conexión: " . $con->connect_error);
-        }
-// Hace la consulta para seleccionar el usuario y contraseña de la base de datos
-        $sql = "SELECT id,contraseña FROM usuarios WHERE username = ?";
-        $stmt = $con->prepare($sql);
-        $stmt->bind_param("s",$username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-/* Recorre la base de datos y comprueba si la contraseña aportada es igual que la que se encuentra en la base de datos,
-si es igual redirige a juegos.php, si no da un mensaje de error*/
-        if ($result->num_rows>0) {
-            $row = $result->fetch_assoc();
-
-            if (password_verify($password, $row['contraseña'])) {
-                $_SESSION['user_id'] = $row['id'];
-                $_SESSION['user_name'] = $username;
-                $id_usuario = $row['id'];
-                header("Location: dashboard.php?id_usuario=$id_usuario");
-                exit();
-            } else {
-                $mensaje_error = "Usuario o contraseña incorrectos";
-            }
-        } else {
-            $mensaje_error = "Usuario o contraseña incorrectos";
-        }
-        $stmt->close();
-        $con->close();
-    } else {
-        $mensaje_error = "Complete usuario y contraseña";
-    }
-}
-?>
     <div class="container">
         <div class="form-container">
             <h2>Iniciar sesión</h2>
-            <!-- Muestra el mensaje de error con estilos -->
+
             <?php if (!empty($mensaje_error)): ?>
                 <p class="mensaje-error"><?php echo $mensaje_error; ?></p>
             <?php endif; ?>
+
             <form action="index.php" method="POST">
                 <label for="username">Usuario:</label>
                 <input type="text" id="username" name="username" placeholder="Ingresa tu usuario" required>
 
                 <label for="password">Contraseña:</label>
                 <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+
+                <label for="auth_code">Código de autenticación:</label>
+                <input type="text" id="auth_code" name="auth_code" placeholder="Ingresa tu código de Google Authenticator" required>
 
                 <button type="submit">Iniciar sesión</button>
             </form>
