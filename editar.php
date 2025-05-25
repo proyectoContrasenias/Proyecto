@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 
 require_once 'encriptacion.php';
 
-$con = new mysqli("localhost", "proyecto", "proyecto", "keysafe");
+$con = new mysqli("192.168.20.35", "proyecto", "proyecto", "keysafe");
 if ($con->connect_error) {
     die("Error de conexión: " . $con->connect_error);
 }

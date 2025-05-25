@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 <?php
 require_once 'encriptacion.php';
 
-$conn = new mysqli("127.0.0.1", "proyecto", "proyecto", "keysafe");
+$conn = new mysqli("192.168.20.35", "proyecto", "proyecto", "keysafe");
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }

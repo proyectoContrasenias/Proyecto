@@ -1,7 +1,11 @@
 <?php
 require_once 'vendor/autoload.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-$conex = new mysqli("127.0.0.1", "proyecto", "proyecto", "keysafe");
+
+$conex = new mysqli("192.168.20.35", "proyecto", "proyecto", "keysafe");
 if ($conex->connect_error) {
     die("Error de conexión: " . $conex->connect_error);
 }

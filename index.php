@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     $auth_code = $_POST['auth_code'];
 
     if (!empty($username) && !empty($password) && !empty($auth_code)) {
-        $con = new mysqli("localhost","proyecto","proyecto","keysafe");
+        $con = new mysqli("192.168.20.35","proyecto","proyecto","keysafe");
 
         if ($con->connect_error) {
             die("Error de conexión: " . $con->connect_error);

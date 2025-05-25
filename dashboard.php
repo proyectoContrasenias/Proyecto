@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     exit();
 }
 // Se conecta a la base de datos y si no muestra el error
-$con = new mysqli("localhost", "proyecto", "proyecto", "keysafe");
+$con = new mysqli("192.168.20.35", "proyecto", "proyecto", "keysafe");
 if ($con->connect_error) {
     die("Error de conexión: " . $con->connect_error);
 }
