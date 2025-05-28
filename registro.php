@@ -22,7 +22,24 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $connueva2 = $_POST['repite-contrasena'];
 
     if ($connueva !== $connueva2) {
-        $mensajeError = "Las contraseñas no coinciden.";
+    $mensajeError = "Las contraseñas no coinciden.";
+} else {
+    // Verificar si el nombre de usuario ya existe
+    $stmtUsuario = $conex->prepare("SELECT id FROM usuarios WHERE username = ?");
+    $stmtUsuario->bind_param("s", $usunuevo);
+    $stmtUsuario->execute();
+    $stmtUsuario->store_result();
+    
+    // Verificar si el correo ya existe
+    $stmtCorreo = $conex->prepare("SELECT id FROM usuarios WHERE correo = ?");
+    $stmtCorreo->bind_param("s", $emailnuevo);
+    $stmtCorreo->execute();
+    $stmtCorreo->store_result();
+
+    if ($stmtUsuario->num_rows > 0) {
+        $mensajeError = "El nombre de usuario ya está en uso.";
+    } elseif ($stmtCorreo->num_rows > 0) {
+        $mensajeError = "El correo electrónico ya está registrado.";
     } else {
         // Generar código secreto de Google Authenticator
         $ga = new PHPGangsta_GoogleAuthenticator();
@@ -41,6 +58,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         $stmt->close();
     }
+
+    $stmtUsuario->close();
+    $stmtCorreo->close();
+}
 }
 ?>
 
