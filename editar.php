@@ -1,9 +1,11 @@
 <?php
+//Inicia la sesión y verifica que el usuario haya iniciado sesión, si no lo redirige al login
 session_start();
 if (!isset($_SESSION['user_id'])) {
    header("Location: index.php?error=Debes iniciar sesión para acceder");
    exit();
 }
+//Si el usuario pulsa el botón de cerrar sesión, la sesión se elimina y se redirige al login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     session_unset();
     session_destroy();
@@ -11,13 +13,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     exit();
 }
 
+//Incluye el script de cifrado y descifrado de contraseñas
 require_once 'encriptacion.php';
 
+//Establece conexión con la base de datos y si hay error detiene la ejecución
 $con = new mysqli("192.168.20.35", "proyecto", "proyecto", "keysafe");
 if ($con->connect_error) {
     die("Error de conexión: " . $con->connect_error);
 }
 
+//Se pasa el id de la contraseña desde el dashboard y se edita esa contraseña
 if(isset($_GET['id'])) {
     $id_pagina = $_GET['id'];
     $sentencia = "SELECT * FROM contraseñas WHERE id = ?";
@@ -25,14 +30,17 @@ if(isset($_GET['id'])) {
     $stmt->bind_param('i', $id_pagina);
 }
 
+//Verifica si el formulario fue enviado
 if (isset($_POST['update_id'])) {
     $update_id = $_POST['update_id'];
     $pagina = $_POST['nombre'];
     $usuario = $_POST['usuario'];
-    $contrasena_cifrada = encryptPassword($_POST['contrasena']);
+    $contrasena_cifrada = encryptPassword($_POST['contrasena']); //Cifra la contraseña
 
+    //Hace la actualización de los datos en la base de datos
     $stmtt = $con->prepare("UPDATE contraseñas SET pagina = ?, usuario = ?, contraseña = ? WHERE id = ?");
     $stmtt->bind_param("sssi", $pagina, $usuario, $contrasena_cifrada, $update_id);
+    //Si se ejecuta correctamente redirige al dashboard, si no muestra un error
     if ($stmtt->execute()) {
         $stmtt->close();
         $id_usuario = $_SESSION['user_id'];
@@ -95,6 +103,7 @@ if (isset($_POST['update_id'])) {
 </main>
 
 <script>
+    //Alterna entre mostrar y ocultar la contraseña
     function togglePassword() {
         const passwordInput = document.getElementById('contrasena');
         const toggleButton = document.querySelector('.toggle-password');

@@ -77,11 +77,11 @@ main {
 }
 
 button.back-button {
-    background-color: #4CAF50;  /* Color verde para diferenciar */
+    background-color: #4CAF50;
     color: white;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
-    margin-left: 10px;  /* Espacio entre los botones */
+    margin-left: 10px;
 }

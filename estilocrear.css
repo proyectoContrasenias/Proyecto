@@ -72,11 +72,11 @@ main {
     background-color: #004488;
     color: white;
     border: none;
-    padding: 10px 20px; /* Aumentamos el padding */
+    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    white-space: nowrap; /* Evita que el texto se divida en dos líneas */
-    font-size: 14px; /* Opcional: ajustar el tamaño si lo necesitas */
+    white-space: nowrap;
+    font-size: 14px;
 }
 
 button.back-button {

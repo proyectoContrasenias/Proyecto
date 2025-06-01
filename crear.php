@@ -1,9 +1,11 @@
 <?php
+// Incia la sesión y verifica si el usuario ha iniciado sesión, si no lo redirige al login con mensaje de error
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: index.php?error=Debes iniciar sesión para acceder");
     exit();
 }
+//Al presionar el botón cerrar sesión, destruye la sesión y lo redirige al login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     session_unset();
     session_destroy();
@@ -35,23 +37,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 
 <?php
 require_once 'encriptacion.php';
-
+//Conexión a la base de datos y muestra errores si falla
 $conn = new mysqli("192.168.20.35", "proyecto", "proyecto", "keysafe");
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
-
+//Guarda la nueva contraseña en la base de datos
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nombre'], $_POST['usuario'], $_POST['contrasena'])) {
     $usuario_id = $_SESSION['user_id'];
     $pagina = $_POST['nombre'];
     $usuario = $_POST['usuario'];
-    $contrasena_cifrada = encryptPassword($_POST['contrasena']);
+    $contrasena_cifrada = encryptPassword($_POST['contrasena']); //Cifra la contraseña
 
+    //Inserta la nueva entrada en la tabla contraseñas
     $stmt = $conn->prepare("INSERT INTO contraseñas(pagina, usuario, contraseña, usuario_id) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("sssi", $pagina, $usuario, $contrasena_cifrada, $usuario_id);
     $stmt->execute();
     $stmt->close();
 
+    //Mensaje de confirmación
     echo "<p>Contraseña guardada exitosamente.</p>";
 }
 ?>
@@ -76,6 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nombre'], $_POST['usua
 </main>
 
 <script>
+    //Alterna entre mostrar y ocultar contraseña
     function togglePassword() {
         const passwordInput = document.getElementById('contrasena');
         const toggleButton = document.querySelector('.toggle-password');
@@ -88,6 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nombre'], $_POST['usua
         }
     }
 
+    //Genera una contraseña aleatoria de 12 caracteres con letras, números y símbolos
     function generatePassword() {
         const length = 12;
         const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";

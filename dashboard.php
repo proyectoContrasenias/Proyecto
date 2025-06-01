@@ -11,7 +11,7 @@ if (!isset($_GET['id_usuario']) || !is_numeric($_GET['id_usuario'])) {
 }
 $id_usuario = (int) $_GET['id_usuario'];
 /* Si el formulario fue enviado con POST y se ha pulsado el botón de cerrar sesión elimina las variables de la sesión,
-destruye la sesión y redirige a index.php con un mensaje de error */
+destruye la sesión y redirige a index.php con un mensaje */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     session_unset();
     session_destroy();
