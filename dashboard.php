@@ -5,11 +5,7 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: index.php?error=Debes iniciar sesión para acceder");
     exit();
 }
-if (!isset($_GET['id_usuario']) || !is_numeric($_GET['id_usuario'])) {
-    header("Location: index.php?error=ID de usuario no válido");
-    exit();
-}
-$id_usuario = (int) $_GET['id_usuario'];
+$id_usuario = $_SESSION['user_id'];
 /* Si el formulario fue enviado con POST y se ha pulsado el botón de cerrar sesión elimina las variables de la sesión,
 destruye la sesión y redirige a index.php con un mensaje */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
@@ -32,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     $stmt->execute();
     $stmt->close();
     // Redirigimos para evitar reenvío del formulario y ver los datos actualizados
-    header("Location: ".$_SERVER['PHP_SELF']."?id_usuario=".$id_usuario);
+    header("Location: ".$_SERVER['PHP_SELF']);
     exit();
 }
 

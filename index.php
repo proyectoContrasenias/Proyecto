@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
                 if ($validCode) {
                     $_SESSION['user_id'] = $row['id'];
                     $_SESSION['user_name'] = $username;
-                    header("Location: dashboard.php?id_usuario=" . $row['id']);
+                    header("Location: dashboard.php");
                     exit();
                 } else {
                     $mensaje_error = "Código de autenticación incorrecto."; //Mensaje de error si el codigo es incorrecto
