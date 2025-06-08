@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
         </form>
         <?php
         $id_usuario = $_SESSION['user_id'];
-        echo "<button class='back-button' onclick=\"location.href='dashboard.php?id_usuario=$id_usuario'\">Volver al Menú</button>";
+        echo "<button class='back-button' onclick=\"location.href='dashboard.php'\">Volver al Menú</button>";
         ?>
     </div>
 </header>

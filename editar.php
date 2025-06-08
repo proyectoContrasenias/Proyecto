@@ -23,8 +23,8 @@ if ($con->connect_error) {
 }
 
 //Se pasa el id de la contraseña desde el dashboard y se edita esa contraseña
-if(isset($_GET['id'])) {
-    $id_pagina = $_GET['id'];
+if (isset($_POST['id'])) {
+    $id_pagina = $_POST['id'];
     $sentencia = "SELECT * FROM contraseñas WHERE id = ?";
     $stmt = $con->prepare($sentencia);
     $stmt->bind_param('i', $id_pagina);
@@ -68,7 +68,7 @@ if (isset($_POST['update_id'])) {
         </form>
         <?php
         $id_usuario = $_SESSION['user_id'];
-        echo "<button class='back-button' onclick=\"location.href='dashboard.php?id_usuario=$id_usuario'\">Volver al Menú</button>";
+        echo "<button class='back-button' onclick=\"location.href='dashboard.php'\">Volver al Menú</button>";
         ?>
     </div>
 </header>

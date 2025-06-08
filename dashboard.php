@@ -70,21 +70,29 @@ $resultado = $stmt2->get_result();
                 if ($resultado->num_rows > 0) {
                     while ($row = $resultado->fetch_assoc()) {
                         $id_pagina = $row['id'];
-                        echo "<tr>
-                            <td><a href='editar.php?id=$id_pagina'>".$row['pagina']."</a></td>
-                            <td>********</td>
+                        echo '<tr>
                             <td>
-                                <form method='POST' style='display:inline;' onsubmit=\"return confirm('¿Estás seguro de eliminar esta contraseña?');\">
-                                    <input type='hidden' name='delete_id' value='".$row['id']."'>
-                                    <button type='submit' class='delete'>Borrar</button>
+                                <form method="post" action="editar.php" style="display:inline;">
+                                    <input type="hidden" name="id" value="' . $id_pagina . '">
+                                    <button type="submit" style="background:none;border:none;color:blue;cursor:pointer;text-decoration:underline;">' 
+                                    . htmlspecialchars($row['pagina']) . 
+                                    '</button>
                                 </form>
                             </td>
-                        </tr>";
+
+                            <td>********</td>
+                            <td>
+                                <form method="post" style="display:inline;" onsubmit="return confirm(\'¿Estás seguro de eliminar esta contraseña?\');">
+                                    <input type="hidden" name="delete_id" value="' . $row['id'] . '">
+                                    <button type="submit" class="delete">Borrar</button>
+                                </form>
+                            </td>
+                        </tr>';
                     }
                 } else {
                     echo '<tr><td colspan="3">Sin resultados</td></tr>';
                 }
-                $resultado->close(); 
+                $resultado->close();
                 ?>
             </tbody>
         </table>
