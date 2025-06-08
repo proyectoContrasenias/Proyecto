@@ -44,7 +44,7 @@ if (isset($_POST['update_id'])) {
     if ($stmtt->execute()) {
         $stmtt->close();
         $id_usuario = $_SESSION['user_id'];
-        header("Location: dashboard.php?id_usuario=$id_usuario");
+        header("Location: dashboard.php");
         exit();
     } else {
         echo "<p>Error al actualizar: " . $stmtt->error . "</p>";
